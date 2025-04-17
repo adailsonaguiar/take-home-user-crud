@@ -15,9 +15,13 @@ export class UsersService {
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<UserProfile[]> {
     const users = await this.usersRepository.find();
-    return users;
+    return users.map((user) => ({
+      id: user.id,
+      email: user.email,
+      name: user.name,
+    }));
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
