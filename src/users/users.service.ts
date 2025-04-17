@@ -1,14 +1,17 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly usersRepository: Repository<User>,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
   async findAll(): Promise<User[]> {
@@ -28,19 +31,17 @@ export class UsersService {
     });
   }
 
-  /*************  ✨ Windsurf Command ⭐  *************/
-  /**
-   * Find a user by id.
-   *
-   * @throws {NotFoundException} if user with given id not found
-   * @param {string} id - user id
-   * @returns {Promise<User>} user
-   */
-  /*******  3ead53d8-adb6-4d94-9b45-b969ba035e3b  *******/
   async findOne(id: string): Promise<User> {
+    const cacheKey = `user_${id}`;
+    const cached = await this.cacheManager.get<User>(cacheKey);
+
+    if (cached) return cached;
+
     const user = await this.usersRepository.findOne({ where: { id } });
 
     if (!user) throw new NotFoundException(`User with ID ${id} not found`);
+
+    await this.cacheManager.set(cacheKey, user);
 
     return user;
   }
