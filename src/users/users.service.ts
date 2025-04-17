@@ -59,4 +59,19 @@ export class UsersService {
   async delete(id: string): Promise<void> {
     await this.usersRepository.delete(id);
   }
+
+  async findByEmail(email: string): Promise<User> {
+    const cacheKey = `user_${email}`;
+    const cached = await this.cacheManager.get<User>(cacheKey);
+
+    if (cached) return cached;
+
+    const user = await this.usersRepository.findOne({ where: { email } });
+
+    if (!user) throw new NotFoundException(`User with ID ${email} not found`);
+
+    await this.cacheManager.set(cacheKey, user);
+
+    return user;
+  }
 }
