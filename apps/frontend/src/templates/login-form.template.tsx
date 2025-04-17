@@ -73,7 +73,7 @@ export const LoginFormTemplate: React.FC<LoginFormTemplateProps> = ({
                 href="/users/new"
                 className="text-blue-500 hover:text-blue-600 text-sm"
               >
-                Não tem uma conta? Cadastre-se
+                Cadastre-se
               </a>
             </div>
           </div>
