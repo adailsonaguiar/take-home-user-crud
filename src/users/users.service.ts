@@ -6,6 +6,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
+import { UserProfile } from './types/userProfile';
 
 @Injectable()
 export class UsersService {
@@ -75,7 +76,9 @@ export class UsersService {
     return user;
   }
 
-  async profile(id: string): Promise<User> {
-    return this.findOne(id);
+  async profile(id: string): Promise<UserProfile> {
+    const user = await this.findOne(id);
+    const userMe = { ...user, password: undefined };
+    return userMe;
   }
 }

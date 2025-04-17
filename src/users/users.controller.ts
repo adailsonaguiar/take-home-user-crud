@@ -14,7 +14,7 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { AuthRequest } from 'src/auth/types/authRequest';
+import { AuthRequest } from '../auth/types/authRequest';
 
 @Controller('users')
 export class UsersController {
@@ -26,12 +26,9 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Get('profile')
   async profile(@Request() req: AuthRequest) {
-    console.log('profile::', req);
-
     return this.usersService.profile(req.user.id);
   }
 
@@ -45,13 +42,15 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id')
   update(@Param('id') id: string, @Body() updateUserDto: CreateUserDto) {
     return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
-  remove(@Body() id: string) {
+  remove(@Param('id') id: string) {
     return this.usersService.delete(id);
   }
 }
