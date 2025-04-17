@@ -21,6 +21,7 @@ export class UsersService {
       id: user.id,
       email: user.email,
       name: user.name,
+      birthDate: user.birthDate,
     }));
   }
 
