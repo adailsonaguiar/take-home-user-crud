@@ -1,0 +1,7 @@
+{
+    "name": "take-home-user-crud",
+    "private": true,
+    "workspaces": [
+      "apps/*"
+    ]
+  }
