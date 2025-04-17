@@ -29,10 +29,13 @@ export class UsersService {
 
   async update(id: string, updateUserDto: CreateUserDto): Promise<User> {
     console.log('userrrrr:::', id);
-    const user = await this.findOne(id);
-    await this.usersRepository.save({ ...user, ...updateUserDto });
+    const userFounded = await this.findOne(id);
+    const userSaved = await this.usersRepository.save({
+      ...userFounded,
+      ...updateUserDto,
+    });
 
-    return user;
+    return userSaved;
   }
 
   async delete(id: string): Promise<void> {
