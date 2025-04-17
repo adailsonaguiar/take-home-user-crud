@@ -74,4 +74,8 @@ export class UsersService {
 
     return user;
   }
+
+  async profile(id: string): Promise<User> {
+    return this.findOne(id);
+  }
 }

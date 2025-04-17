@@ -1,14 +1,20 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
   Param,
   Post,
   Put,
+  Request,
+  UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { AuthRequest } from 'src/auth/types/authRequest';
 
 @Controller('users')
 export class UsersController {
@@ -17,6 +23,16 @@ export class UsersController {
   @Get()
   findAll() {
     return this.usersService.findAll();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get('profile')
+  async profile(@Request() req: AuthRequest) {
+    console.log('profile::', req);
+
+    return this.usersService.profile(req.user.id);
   }
 
   @Post()
