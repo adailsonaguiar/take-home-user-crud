@@ -3,6 +3,7 @@ import React from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { UserFormTemplate } from "@/templates/user-form.template";
 import { getUser, updateUser, UserFormData } from "@/services/users";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 
 interface EditUserProps {
   params: {
@@ -34,12 +35,14 @@ const EditUser: React.FC<EditUserProps> = ({ params }) => {
   }
 
   return (
-    <UserFormTemplate
-      initialData={user}
-      isEdit
-      onSubmit={mutate}
-      isLoading={isPending}
-    />
+    <ProtectedRoute>
+      <UserFormTemplate
+        initialData={user}
+        isEdit
+        onSubmit={mutate}
+        isLoading={isPending}
+      />
+    </ProtectedRoute>
   );
 };
 

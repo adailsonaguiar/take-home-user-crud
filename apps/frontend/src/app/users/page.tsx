@@ -3,6 +3,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getUsers } from "@/services/users";
 import { UsersTemplate } from "@/templates/users.template";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 
 const Users: React.FC = () => {
   const {
@@ -40,13 +41,15 @@ const Users: React.FC = () => {
   }
 
   return (
-    <UsersTemplate
-      data={users ?? []}
-      isLoading={isLoading}
-      onDelete={handleDeleteUser}
-      onEdit={handleEditUser}
-      onAddUser={handleAddUser}
-    />
+    <ProtectedRoute>
+      <UsersTemplate
+        data={users ?? []}
+        isLoading={isLoading}
+        onDelete={handleDeleteUser}
+        onEdit={handleEditUser}
+        onAddUser={handleAddUser}
+      />
+    </ProtectedRoute>
   );
 };
 

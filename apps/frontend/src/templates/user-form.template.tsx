@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { MainTemplate } from ".";
 import { TextField } from "@/components/TextField";
 import { ErrorCallout } from "@/components/ErrorCallout";
+import { Button } from "@/components/Button";
 
 interface UserFormData {
   name: string;
@@ -118,21 +119,10 @@ export const UserFormTemplate: React.FC<UserFormTemplateProps> = ({
         {formError && <ErrorCallout message={formError} />}
 
         <div className="flex space-x-4">
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="flex-1 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
-          >
-            {isLoading ? (
-              <div className="flex items-center justify-center">
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              </div>
-            ) : isEdit ? (
-              "Atualizar"
-            ) : (
-              "Cadastrar"
-            )}
-          </button>
+          <Button
+            isLoading={isLoading}
+            label={isEdit ? "Atualizar" : "Cadastrar"}
+          />
 
           <a
             href="/users"
