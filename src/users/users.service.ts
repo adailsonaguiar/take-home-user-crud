@@ -28,6 +28,15 @@ export class UsersService {
     });
   }
 
+  /*************  ✨ Windsurf Command ⭐  *************/
+  /**
+   * Find a user by id.
+   *
+   * @throws {NotFoundException} if user with given id not found
+   * @param {string} id - user id
+   * @returns {Promise<User>} user
+   */
+  /*******  3ead53d8-adb6-4d94-9b45-b969ba035e3b  *******/
   async findOne(id: string): Promise<User> {
     const user = await this.usersRepository.findOne({ where: { id } });
 
