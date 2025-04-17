@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { UserFormTemplate } from "@/templates/user-form.template";
 import { getUser, updateUser, UserFormData } from "@/services/users";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { useRouter } from "next/navigation";
 
 interface EditUserProps {
   params: {
@@ -13,6 +14,8 @@ interface EditUserProps {
 
 const EditUser: React.FC<EditUserProps> = ({ params }) => {
   const queryClient = useQueryClient();
+  const router = useRouter();
+
   const { data: user, isLoading: isLoadingUser } = useQuery({
     queryKey: ["user", params.id],
     queryFn: () => getUser(params.id),
@@ -22,7 +25,7 @@ const EditUser: React.FC<EditUserProps> = ({ params }) => {
     mutationFn: (data: UserFormData) => updateUser(params.id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
-      window.location.href = "/users";
+      router.push("/");
     },
   });
 

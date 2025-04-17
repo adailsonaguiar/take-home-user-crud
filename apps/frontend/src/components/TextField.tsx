@@ -29,7 +29,7 @@ export const TextField = ({
         name={name}
         value={value}
         onChange={onChange}
-        className="mt-1 block w-full h-8 p-2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+        className="mt-1 block w-full h-8 p-2 rounded-md text-gray-900 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
       />
       {error && <p className="text-red-500 text-sm font-semibold">{error}</p>}
     </div>

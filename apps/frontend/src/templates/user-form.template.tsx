@@ -3,6 +3,7 @@ import { MainTemplate } from ".";
 import { TextField } from "@/components/TextField";
 import { ErrorCallout } from "@/components/ErrorCallout";
 import { Button } from "@/components/Button";
+import Link from "next/link";
 
 interface UserFormData {
   name: string;
@@ -124,12 +125,12 @@ export const UserFormTemplate: React.FC<UserFormTemplateProps> = ({
             label={isEdit ? "Atualizar" : "Cadastrar"}
           />
 
-          <a
-            href="/users"
+          <Link
+            href="/"
             className="flex-1 text-center bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
           >
             Cancelar
-          </a>
+          </Link>
         </div>
       </form>
     </MainTemplate>

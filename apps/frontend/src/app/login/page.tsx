@@ -16,7 +16,7 @@ const LoginPage: React.FC = () => {
       setFormError("");
       const response = await login(data);
       setToken(response.access_token);
-      router.push("/users");
+      router.push("/");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setFormError(
